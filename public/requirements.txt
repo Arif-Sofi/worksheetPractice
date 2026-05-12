@@ -1,0 +1,2 @@
+Build an interactive educational worksheet using Vue (v3) or React, based on the example.png image, and provide these.
+(1) Include all worksheet content and copyright information, (2) apply responsive design for desktop and mobile, (3) use any layout or visual style, (4) include a reset button to clear answers, (5) implement a submit button that calculates the score, (6) display the final score clearly, and (7) require users to enter their name before submission.
