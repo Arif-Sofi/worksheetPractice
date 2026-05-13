@@ -112,10 +112,108 @@ export const questions = [
   },
   // ... rest of the 12 questions
 ];
-```
 
 ## 4. Design Tips
 - **Typography**: Use a clean sans-serif font like Inter (default in Next.js).
 - **Spacing**: Use `space-y-8` or `gap-8` to give the questions breathing room.
 - **Interactive Feedback**: When a user clicks an option, give immediate visual feedback (e.g., a "circled" look).
 - **Score Display**: Use a modal or a clear section at the top that appears only after submission.
+```
+
+## 5. The Thought Process: How to Approach a Feature
+
+When starting a new feature (like this worksheet), follow this "Inside-Out" workflow. It ensures you don't build a beautiful UI that can't actually handle the data it needs.
+
+### Step 1: Data Modeling (The "Brain")
+**Why first?** If you don't know what your data looks like, your UI will be "dumb" and hard to refactor later.
+- **Action**: Define the "Schema". For this project, a question isn't just text; it's an object with an ID, choices, and a solution.
+- **Goal**: Have a `mockData.ts` file ready before you write a single `<div>`.
+
+### Step 2: Component Architecture (The "Skeletal System")
+**Why?** Don't write one giant file. Break it down into small, manageable pieces.
+- **Action**: Draw boxes around the `example.png`. 
+    - Top box = `Header`
+    - Middle box = `WorksheetGrid`
+    - Small box inside grid = `QuestionCard`
+    - Bottom box = `Footer`
+- **Goal**: Create empty component files that just return `<div>Component Name</div>`.
+
+### Step 3: Static UI (The "Skin")
+**Why?** Get the look right using your mock data, but don't worry about "clicks" yet.
+- **Action**: Use Tailwind to layout the components. Pass your mock data into the components as **Props**.
+- **Goal**: The app looks exactly like the image, but buttons don't do anything yet.
+
+### Step 4: Logic & Interactivity (The "Nervous System")
+**Why?** Now that it looks right, make it "alive".
+- **Action**: Add `useState`. 
+    - "Where should the state live?" -> Usually at the highest common parent (e.g., `page.tsx`) so it can share data between the list and the submit button.
+- **Goal**: Clicking an option updates the state. Typing in the name updates the state.
+
+### Step 5: Validation & Feedback (The "Reflexes")
+**Why?** Handle the "What if?" scenarios.
+- **Action**: 
+    - "What if they don't enter a name?" -> Show an error.
+    - "What if they click submit?" -> Calculate score and change the UI to show the result.
+- **Goal**: A fully functional, "bulletproof" feature.
+
+## 6. Tailwind CSS for Flutter Developers
+
+If you are coming from Flutter, think of Tailwind classes as the parameters you pass into your Widgets. In Web development, we use **Flexbox** to achieve almost everything you do with `Row` and `Column`.
+
+### Layout Equivalents
+
+| Flutter Widget | Tailwind Equivalent (Flexbox) | Description |
+| :--- | :--- | :--- |
+| `Column()` | `flex flex-col` | Aligns children vertically. |
+| `Row()` | `flex flex-row` | Aligns children horizontally (default for `flex`). |
+| `Container()` | `div` with `p-4 m-2 bg-white` | A box with padding, margin, and background. |
+| `SizedBox(height: 10)` | `h-2.5` or `space-y-2.5` | Fixed height or vertical spacing between items. |
+| `Padding()` | `p-4` (all), `px-4` (horizontal) | Adds internal space. |
+| `Center()` | `flex items-center justify-center` | Centers child both vertically and horizontally. |
+| `Expanded()` | `flex-1` | Tells the child to take up all remaining space. |
+
+### Common Layout Combinations
+
+**1. The "Column" with Spacing (Main Worksheet Container)**
+In Flutter, you'd use `Column(children: [...], mainAxisAlignment: MainAxisAlignment.start)`.
+```html
+<div class="flex flex-col gap-8 p-6">
+  <!-- Your Header, Questions, and Footer go here -->
+</div>
+```
+
+**2. The "Row" for Options**
+For the `a. 10`, `b. 20` choices, you want them aligned horizontally or vertically.
+```html
+<!-- Vertical list of options like a Column -->
+<div class="flex flex-col gap-2">
+  <button class="text-left">a. 10</button>
+  <button class="text-left">b. 20</button>
+</div>
+```
+
+**3. The "Container" (Question Card)**
+Equivalent to a `Container` with `BoxDecoration`.
+```html
+<div class="rounded-lg border border-gray-200 p-4 shadow-sm bg-white">
+  <p class="font-bold text-lg">17 rounded off...</p>
+</div>
+```
+
+### Alignment Cheatsheet
+
+| Flutter Property | Tailwind Class |
+| :--- | :--- |
+| `MainAxisAlignment.center` | `justify-center` |
+| `MainAxisAlignment.spaceBetween` | `justify-between` |
+| `CrossAxisAlignment.center` | `items-center` |
+| `CrossAxisAlignment.start` | `items-start` |
+
+### Spacing (The "Gap" Pattern)
+In Flutter, you often put `SizedBox` between elements. In Tailwind, it is much easier to use `gap` on the parent:
+- `gap-4`: Adds 1rem (16px) of space between **all** children (works for both Row and Column).
+1.  **Define the Data**: What is the input? What is the output?
+2.  **Sketch the Components**: How many small pieces is this?
+3.  **Build the Shell**: Make it look pretty with static data.
+4.  **Wire the Logic**: Make the buttons and inputs work.
+5.  **Test & Refine**: Edge cases (empty inputs, mobile view, etc.).
