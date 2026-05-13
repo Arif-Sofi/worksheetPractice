@@ -209,11 +209,77 @@ Equivalent to a `Container` with `BoxDecoration`.
 | `CrossAxisAlignment.center` | `items-center` |
 | `CrossAxisAlignment.start` | `items-start` |
 
-### Spacing (The "Gap" Pattern)
-In Flutter, you often put `SizedBox` between elements. In Tailwind, it is much easier to use `gap` on the parent:
-- `gap-4`: Adds 1rem (16px) of space between **all** children (works for both Row and Column).
-1.  **Define the Data**: What is the input? What is the output?
-2.  **Sketch the Components**: How many small pieces is this?
-3.  **Build the Shell**: Make it look pretty with static data.
-4.  **Wire the Logic**: Make the buttons and inputs work.
-5.  **Test & Refine**: Edge cases (empty inputs, mobile view, etc.).
+---
+
+## 7. Phase 3: Detailed State & Logic Examples
+
+In Phase 3, you move from a **static** UI to a **functional** application. The biggest challenge is making different components (like the Name Input and the Question Cards) talk to each other.
+
+### A. Lifting State Up
+Currently, your `NameInput` handles its own state. But when the user clicks the `Submit` button in the footer, the footer doesn't know what the name is!
+
+**Concept**: Move the state to the closest common parent (in your case, `page.tsx`).
+
+**Example implementation in `page.tsx`**:
+```tsx
+export default function WorksheetPage() {
+  const [name, setName] = useState('');
+
+  return (
+    <div>
+      <NameInput value={name} onChange={(newName) => setName(newName)} />
+      <SubmitButton name={name} />
+    </div>
+  );
+}
+```
+
+### B. Managing Multiple Answers
+You have 12 questions. You need to "remember" which option was picked for each one. Use an **Object** where the `key` is the Question ID and the `value` is the selected index.
+
+**Example state structure**:
+```tsx
+const [answers, setAnswers] = useState<{ [key: number]: number }>({});
+
+// Function to update an answer
+const handleSelect = (questionId: number, optionIndex: number) => {
+  setAnswers({
+    ...answers, 
+    [questionId]: optionIndex 
+  });
+};
+```
+
+### C. Calculating the Score
+When `Submit` is clicked, compare the user's `answers` with the `correctAnswer` in your `data/questions.ts`.
+
+**Example Logic**:
+```tsx
+const handleSubmit = () => {
+  if (!name.trim()) {
+    alert("Please enter your name!");
+    return;
+  }
+
+  let newScore = 0;
+  worksheetQuestions.forEach((q) => {
+    if (answers[q.id] === q.correctAnswer) {
+      newScore += 1;
+    }
+  });
+
+  setScore(newScore);
+};
+```
+
+### D. Resetting Everything
+Resetting is just setting all state back to its initial value.
+
+```tsx
+const handleReset = () => {
+  setName('');
+  setAnswers({});
+  setScore(null);
+};
+```
+
