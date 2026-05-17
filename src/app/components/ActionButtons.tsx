@@ -1,11 +1,5 @@
 import React from "react"; // Importing React.
 
-/**
- * COMPONENT: Controls
- * Contains the primary action buttons for the worksheet.
- * This component is "Stateless" — it just emits events to the parent.
- */
-
 interface ControlsProps {
   onSubmit: () => void;
   onReset: () => void;
