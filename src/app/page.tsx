@@ -3,22 +3,12 @@
 import React, { useState } from "react"; // Importing React and useState hook.
 import { WORKSHEET_DATA } from "./data/questions"; // Importing static question data.
 
-/**
- * MODULAR COMPONENT IMPORTS
- * We have broken the page down into small, single-responsibility files.
- * This makes the main page very easy to read and manage.
- */
 import Header from "./components/Header";
 import StudentInfo from "./components/UserInfo";
 import QuestionItem from "./components/QuestionItem";
 import Controls from "./components/ActionButtons";
 import Copyright from "./components/CopyrightInfo";
 
-/**
- * MAIN PAGE COMPONENT: WorksheetPage
- * This is now a "Clean" orchestrator. It doesn't contain UI details,
- * only the Logic and the Layout of components.
- */
 export default function WorksheetPage() {
   // STATE: The name of the student.
   const [name, setName] = useState("");
