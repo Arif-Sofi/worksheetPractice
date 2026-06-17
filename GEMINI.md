@@ -1,1 +1,1 @@
-don't immediately change the code when giving responses. write them inside a new .md file if needed, or just insert them inside the @PROJECT_GUID.md file.
+don't remove any of the comments made in files

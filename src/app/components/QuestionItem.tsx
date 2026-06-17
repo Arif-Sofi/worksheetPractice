@@ -66,7 +66,10 @@ export default function QuestionItem({
                     onChange={() => onSelect(question.id, opt.value)}
                     disabled={isDisabled}
                     // Tailwind: mr-3 (margin-right)
-                    className="w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary mr-3"
+                    className={`w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary mr-3 
+                      ${  isDisabled 
+                          ? "cursor-not-allowed"
+                          : "cursor-pointer"}`}
                   />
                   <span className="text-lg">{opt.label}</span>
                 </label>
@@ -78,12 +81,14 @@ export default function QuestionItem({
         {/* FEEDBACK SECTION */}
         {isDisabled && (
           <div className="mt-4 pt-4 border-t border-gray-200">
-            {userAnswer === question.correctAnswer ? (
+            {userAnswer === question.correctAnswer 
+            ? (
               // Tailwind: text-green-600
               <div className="flex items-center text-green-600 font-bold text-lg animate-bounce-short">
                 <span>Correct!</span>
               </div>
-            ) : (
+            ) 
+            : (
               // Tailwind: text-red-600
               <div className="flex items-center text-red-500 font-bold text-lg">
                 <span>Incorrect! Answer: {question.correctAnswer}</span>

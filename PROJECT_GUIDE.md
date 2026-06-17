@@ -283,3 +283,38 @@ const handleReset = () => {
 };
 ```
 
+## 8. Beginner-Friendly Phase 3: Simplified Explanations
+
+If the code above looks a bit confusing, here is a "Beginner Method" to understand the exact same concepts using analogies.
+
+### A. The "Photocopy" Method (Spread Operator `...`)
+In React, you cannot change the original "Answers" list directly. You must make a copy first.
+
+**The Step-by-Step Way:**
+```javascript
+const handleSelect = (questionId, optionIndex) => {
+  // 1. Photocopy the old answers into a new variable
+  const newAnswers = { ...answers };
+
+  // 2. Change the specific answer on our new copy
+  newAnswers[questionId] = optionIndex;
+
+  // 3. Tell React to use our new copy as the truth
+  setAnswers(newAnswers);
+};
+```
+
+### B. The "Variable Label" Method (Computed Property `[key]`)
+When you use `[questionId]`, you are telling JavaScript: *"Don't use the word 'questionId' as the label. Look at the number INSIDE the questionId variable and use that instead."*
+
+### C. The "Remote Control" Method (Callbacks)
+Passing a function like `onSelect` to a child component is like giving them a **Remote Control**.
+- The **TV (Parent)** holds the power.
+- The **Remote (Child)** has the buttons.
+- When the Child presses a button, it sends a signal back to the Parent to change the channel (update the state).
+
+### D. The "Boss & Worker" Method (Lifting State Up)
+- The **Boss (page.tsx)** holds the only copy of the "Worksheet Data."
+- The **Worker (NameInput.tsx)** doesn't have its own data. It just shows what the Boss tells it to show and reports back when the user types something.
+
+

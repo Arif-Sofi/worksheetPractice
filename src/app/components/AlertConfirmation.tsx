@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./SingleButton";
 
 interface AlertConfirmationProps{
     title: string;
@@ -33,6 +34,19 @@ export default function AlertConfirmation({
                     </p>
                 </div>
                 <div className="flex flex-row items-center justify-center gap-4 w-full mt-4">
+
+                    {/* <Button 
+                        title="Cancel"
+                        className = "cursor-pointer flex-1 bg-secondary/5 border-secondary/30 py-3"
+                        onClick={onCancel}
+                        disabled={undefined}
+                    />
+                    <Button 
+                        title="Confirm"
+                        className = "cursor-pointer flex-1 bg-red-200 border-red-700 py-3"
+                        onClick={onConfirm}
+                        disabled={undefined}
+                    /> */}
                     <button
                         onClick={onCancel}
                         className="cursor-pointer flex-1 bg-secondary/5 border-2 border-secondary/30 text-black font-montserrat font-bold py-3 rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98]"
