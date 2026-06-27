@@ -2,6 +2,8 @@ import "./globals.css";
 
 import { Montserrat } from 'next/font/google'
 
+import Navigation from "./components/navigation/navbar";
+
 const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
@@ -21,6 +23,7 @@ export default function RootLayout({
     <html lang="en" className={montserrat.className}>
       <body className="bg-gray-50 min-h-screen text-slate-900">
         {/* TASK: You can add a global Navigation or Header here if needed */}
+        <Navigation />
         {children}
       </body>
     </html>
